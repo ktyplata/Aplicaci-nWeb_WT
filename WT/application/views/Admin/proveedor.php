@@ -1,0 +1,102 @@
+
+<?php
+              if($this->session->userdata('autentificado')){
+
+
+              	?>
+<h1 style="float: left; color: wheat; margin-left: 5%;"> Bienvenid@ <?php  echo $this->session->userdata('user'); 
+	?> al CPanel  </h1> 
+            <?php	
+              }  else { ?>
+                  <?php echo "<script>
+        alert('No se quien eres');
+        
+        </script>";?>
+            <?php
+                  redirect('Admin/login');
+}
+              ?>
+
+
+        
+
+
+            <?php
+                if(!$this->session->userdata('autentificado')){
+                    	 ?>
+                   <?php
+               }else{
+               	?>
+<a  href="<?php echo base_url();?>index.php/Usuarios/cerrarSesion"><button  class="btn btn-warning" style="color: white; margin-top: 10px; float: right; margin-right: 5%;"> Cerrar Sesion</button></a>
+<?php
+                        }
+                        ?>
+<br>
+
+<script src="https://code.jquery.com/jquery-3.0.0.js" integrity="sha256-jrPLZ+8vDxt2FnE1zvZXCkCcebI/C8Dt5xyaQBjxQIo="
+			  crossorigin="anonymous"></script>
+
+  <section  class="col-sm-12 ">
+        <div class="panel-warning">
+            <div class="panel-heading" style=" text-align: center">Este es el Apartado de Proveedor Transporte</div>
+<table class="table  table-responsive table-striped table-hover table-bordered" >
+    <tr><td colspan="9" >
+            <a href="<?php echo base_url(); ?>index.php/Admin/frmProv" class="btn btn-info">Nuevo</a>
+            <a href="<?php echo base_url(); ?>index.php/Proveedor/tuXML/proveedores-transportes" class="btn btn-info">Descargar XML</a>
+            <a href="<?php echo base_url(); ?>index.php/Proveedor/tuExcel" class="btn btn-info">Descargar Excel</a>
+        </td></tr>
+    <tr>
+         <td>idProveedor</td>
+        <td>Nombre</td>
+        <td class="hidden-xs">Telefono</td>
+        <td>Email</td>
+        <td>Dirección</td>
+        <td>idTransporte</td>
+        <td>NomTransporte</td>
+      
+        
+        <td colspan="2" style=" text-align: center">Acciones</td>
+    </tr>
+<?php
+if(isset($prov)){
+    foreach ($prov as $transport){
+        echo "<tr> <td>" . $transport->idProveedor . "</td>". 
+               "<td>" . $transport->Nombre . "</td>" .
+                "<td class='hidden-xs'>" . $transport->Telefono. "</td>"  .
+                "<td class='hidden-xs'>" . $transport->Email. "</td>"  .
+                "<td class='hidden-xs'>" . $transport->Direccion. "</td>"  .
+                "<td class='hidden-xs'>" . $transport->idTransporte. "<br>" . $transport->NomTransporte."</td>"  .
+                "<td class='hidden-xs'>" . $transport->NomTransporte. "</td>"
+                ;
+        
+                  ?>
+            
+        
+        <td><a class="btn btn-success" href="<?php echo base_url(); ?>index.php/Proveedor/frmUpProv/<?php echo $transport->idProveedor; ?>">Modificar</a></td>
+        <td><a class="btn btn-danger" onclick="return confirmar()"  href="<?php echo base_url(); ?>index.php/Proveedor/delProv/<?php echo $transport->idProveedor; ?>">Eliminar</a></td></tr>;
+     <?php }
+}else{
+    echo "Sin registros";
+}
+?>
+</table>
+            
+            <?php
+        echo $this->pagination->create_links(); 
+        ?>
+            <button class="btn btn-info visible-xs hidden-lg hidden-md hidden-sm" type="submit"> <span class="glyphicon glyphicon-plus-sign" >Ver Mas</span></button>
+            </div>
+    
+    
+    <script type="text/javascript">
+            function confirmar(){
+        if(confirm('¿Realmente deseas eliminar este proveedor ?'))
+            return true;
+        
+                else
+                    return false;
+        }
+        </script>
+
+
+</section>
